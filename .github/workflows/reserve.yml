@@ -1,30 +1,23 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Reserve
 
-# Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch: 
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  setup:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version: 3.14
+          cache: pip
+          pip-version: 25.3
+          pip-install: pytest-playwright
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Install required browsers
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo Beginning installation of required browsers,
+          playwright install,
+          echo Finished installing required browsers.
