@@ -1,0 +1,26 @@
+name: Reserve
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Install Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version: 3.14
+          cache: pip
+          pip-version: 25.3
+
+      - name: Install dependencies
+        run: |
+          echo Installing dependencies,
+          pip install pytest-playwright,
+          playwright install,
+          echo Finished installing dependencies.
