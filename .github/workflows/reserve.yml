@@ -28,5 +28,5 @@ jobs:
       - name: Run script
         run: |
           echo Running the script.
-          python /my-birdies/reserve.py
+          python $GITHUB_WORKSPACE/reserve.py
           echo Finished running the script.
