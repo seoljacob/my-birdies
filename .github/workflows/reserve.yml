@@ -1,6 +1,9 @@
 name: Reserve
 
 on:
+  schedule:
+    - cron: "45 6 * * 4"
+
   workflow_dispatch: 
 
 jobs:
@@ -24,6 +27,16 @@ jobs:
           echo Installing browsers.
           playwright install
           echo Finished installing browsers.
+
+     - name: Wait until 11:00 PM PST
+        run: |
+          TARGET_TIME=$(date -d "07:00" +%s)
+          CURRENT_TIME=$(date +%s)
+          SLEEP_SECONDS=$((TARGET_TIME - CURRENT_TIME))
+          if [ $SLEEP_SECONDS -gt 0 ]; then
+            echo "Waiting $SLEEP_SECONDS seconds for exact 11:00 PM PST..."
+            sleep $SLEEP_SECONDS
+          fi
 
       - name: Run script
         env:

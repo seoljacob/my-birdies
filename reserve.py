@@ -16,9 +16,9 @@ def register(p, days):
     for day in days:
         try:
             print(f"Registering for {day}...")
-            #p.get_by_text(day).click()
-            #p.get_by_role("button", name="Register Now").click()
-            #p.get_by_text("Birdie Buddies".click()
+            p.get_by_text(day).click()
+            p.get_by_role("button", name="Register Now").click()
+            p.get_by_text("Birdie Buddies".click()
             print("Registered for {day}!")
         except Error as e:
             print(f"{type(e).__name__}: {e}")
