@@ -17,10 +17,10 @@ jobs:
           python-version: 3.14
           cache: pip
           pip-version: 25.3
+          pip-install: -r requirements.txt
 
-      - name: Install dependencies
+      - name: Install browsers
         run: |
-          echo Installing dependencies,
-          pip install pytest-playwright,
-          playwright install,
-          echo Finished installing dependencies.
+          echo Installing browsers.
+          playwright install
+          echo Finished installing browsers.
