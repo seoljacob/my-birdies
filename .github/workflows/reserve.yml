@@ -21,6 +21,6 @@ jobs:
 
       - name: Install browsers
         run: |
-          echo Installing browsers,
-          playwright install,
+          echo Installing browsers.
+          playwright install
           echo Finished installing browsers.
