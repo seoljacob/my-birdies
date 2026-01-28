@@ -26,6 +26,9 @@ jobs:
           echo Finished installing browsers.
 
       - name: Run script
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}
         run: |
           echo Running the script.
           python $GITHUB_WORKSPACE/reserve.py
