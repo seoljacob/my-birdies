@@ -4,14 +4,14 @@ on:
   workflow_dispatch: 
 
 jobs:
-  setup:
+  reserve:
     runs-on: ubuntu-latest
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         
-      - name: Install Python
+      - name: Install Python and required dependencies
         uses: actions/setup-python@v6.2.0
         with:
           python-version: 3.14
@@ -19,8 +19,14 @@ jobs:
           pip-version: 25.3
           pip-install: -r requirements.txt
 
-      - name: Install browsers
+      - name: Install required browsers
         run: |
           echo Installing browsers.
           playwright install
           echo Finished installing browsers.
+
+      - name: Run script
+        run: |
+          echo Running the script.
+          python /my-birdies/reserve.py
+          echo Finished running the script.
