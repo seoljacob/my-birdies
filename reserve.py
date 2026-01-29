@@ -12,8 +12,8 @@ def sign_in(p, e, ph):
     except Exception as e:
         print(f"{type(e).__name__}: {e}")
 
-def register(p, days):
-    for day in days:
+def register(p, d):
+    for day in d:
         try:
             print(f"Registering for {day}...")
             p.get_by_text(day).click()
