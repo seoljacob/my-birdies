@@ -9,7 +9,7 @@ def sign_in(p, e, ph):
         p.get_by_role("button", name="Continue").click()
         p.get_by_placeholder("7781234567").fill(ph)
         p.get_by_role("button", name="Sign In").click()
-    except Error as e:
+    except Exception as e:
         print(f"{type(e).__name__}: {e}")
 
 def register(p, days):
@@ -18,9 +18,9 @@ def register(p, days):
             print(f"Registering for {day}...")
             p.get_by_text(day).click()
             p.get_by_role("button", name="Register Now").click()
-            p.get_by_text("Birdie Buddies".click())
+            p.get_by_text("Birdie Buddies").click()
             print("Registered for {day}!")
-        except Error as e:
+        except Exception as e:
             print(f"{type(e).__name__}: {e}")
 
 def main():
