@@ -19,7 +19,7 @@ def register(p, days):
             p.get_by_text(day).click()
             p.get_by_role("button", name="Register Now").click()
             p.get_by_text("Birdie Buddies").click()
-            print("Registered for {day}!")
+            print(f"Registered for {day}!")
         except Exception as e:
             print(f"{type(e).__name__}: {e}")
 
