@@ -18,7 +18,7 @@ def register(p, d):
             p.get_by_text(day).click()
             expect(p.get_by_role("button", name="Register Now")).to_be_visible()
             p.get_by_role("button", name="Register Now").click()
-            print("Registered for {day}!")
+            print(f"Registered for {day}!")
         except Exception as e:
             print(f"{type(e).__name__}: {e}")
         finally:

@@ -28,7 +28,7 @@ jobs:
           playwright install
           echo Finished installing browsers.
 
-     - name: Wait until 11:00 PM PST
+      - name: Wait until 11:00 PM PST
         run: |
           TARGET_TIME=$(date -d "07:00" +%s)
           CURRENT_TIME=$(date +%s)
