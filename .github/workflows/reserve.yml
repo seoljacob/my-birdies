@@ -40,8 +40,9 @@ jobs:
 
       - name: Run script
         env:
-          EMAIL: ${{ secrets.EMAIL }}
-          PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}
+          EMAILS: ${{ secrets.EMAILS }}
+          PHONE_NUMBERS: ${{ secrets.PHONE_NUMBERS }}
+          DAYS: ${{ secrets.DAYS }}
         run: |
           echo Running the script.
           python $GITHUB_WORKSPACE/main.py
