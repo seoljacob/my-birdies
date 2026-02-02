@@ -34,7 +34,7 @@ jobs:
           CURRENT_TIME=$(date +%s)
           SLEEP_SECONDS=$((TARGET_TIME - CURRENT_TIME))
           if [ $SLEEP_SECONDS -gt 0 ]; then
-            echo "Waiting $SLEEP_SECONDS seconds for exact 11:00 PM PST..."
+            echo "Waiting $SLEEP_SECONDS seconds for 11:00 PM PST..."
             sleep $SLEEP_SECONDS
           fi
 
