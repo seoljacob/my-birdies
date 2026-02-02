@@ -2,7 +2,7 @@ name: Reserve
 
 on:
   schedule:
-    - cron: "45 6 * * 4"
+    - cron: "40 6 * * 4"
 
   workflow_dispatch: 
 
@@ -44,5 +44,5 @@ jobs:
           PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}
         run: |
           echo Running the script.
-          python $GITHUB_WORKSPACE/reserve.py
+          python $GITHUB_WORKSPACE/main.py
           echo Finished running the script.
