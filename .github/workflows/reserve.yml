@@ -43,6 +43,8 @@ jobs:
           EMAILS: ${{ secrets.EMAILS }}
           PHONE_NUMBERS: ${{ secrets.PHONE_NUMBERS }}
           DAYS: ${{ secrets.DAYS }}
+          GUESTS: ${{ secrets.GUESTS }}
+          GUEST_DAYS: ${{ secrets. GUEST_DAYS }}
         run: |
           echo Running the script.
           python $GITHUB_WORKSPACE/main.py
