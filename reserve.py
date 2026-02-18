@@ -15,22 +15,22 @@ def retry(p, fn, t=10):
             break
     return success
 
-def click_element(p, locator_fn, locator_arg, description, timeout=500):
+def click_element(p, locator_fn, locator_arg, timeout=500):
     try:
         locator = locator_fn(locator_arg)
         expect(locator).to_be_visible(timeout=timeout)
         locator.click()
-        print(f"Clicked {description}!")
+        print(f"Clicked {locator_arg}!")
         return True
     except Exception:
-        print(f"Could not click {description}.")
+        print(f"Could not click {locator_arg}.")
         return False
 
 def click_day(p, d):
-    return click_element(p, p.get_by_text, d, d)
+    return click_element(p, p.get_by_text, d)
 
 def click_register(p, s):
-    return click_element(p, lambda name: p.get_by_role("button", name=name), s, s)
+    return click_element(p, lambda name: p.get_by_role("button", name=name), s)
 
 def sign_in(p, e, ph):
     try:
