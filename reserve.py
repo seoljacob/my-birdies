@@ -22,8 +22,9 @@ def click_card(p, d):
 
 def is_balance_sufficient(p, e):
     try:
-        expect(p.get_by_title("Available balance - Click to view wallet")).to_have_text(re.compile(r"\$\d+\.\d{2}"))
-        balance = p.get_by_title("Available balance - Click to view wallet").text_content().strip()
+        title = "Available balance - Click to view wallet"
+        expect(p.get_by_title(title)).to_have_text(re.compile(r"\$\d+\.\d{2}"))
+        balance = p.get_by_title(title).text_content().strip()
         balance = Decimal(balance[1:])
         if balance < 15.00:
             print(f"{e} has insufficient balance: ${balance:.2f}")
