@@ -1,7 +1,38 @@
+from decimal import Decimal
 from playwright.sync_api import expect
+import re
 import time
 
-def retry(p, fn, t=10):
+
+def click_element(locator_fn, locator_arg, timeout=500):
+    try:
+        locator = locator_fn(locator_arg)
+        expect(locator).to_be_visible(timeout=timeout)
+        locator.click()
+        return True
+    except Exception as err:
+        print(f"Could not click {locator_arg}.")
+        return False
+
+def click_button(p, s):
+    return click_element(lambda name: p.get_by_role("button", name=name), s)
+
+def click_card(p, d):
+    return click_element(p.get_by_text, d)
+
+def is_balance_sufficient(p, e):
+    try:
+        expect(p.get_by_title("Available balance - Click to view wallet")).to_have_text(re.compile(r"\$\d+\.\d{2}"))
+        balance = p.get_by_title("Available balance - Click to view wallet").text_content().strip()
+        balance = Decimal(balance[1:])
+        if balance < 15.00:
+            print(f"{e} has insufficient balance: ${balance:.2f}")
+            return False
+        return True
+    except Exception as err:
+        print(f"Could not check balance for {e}: {err}")
+    
+def retry(p, fn, t=30):
     end_time = time.time() + t
     i = 1
     success = False
@@ -15,62 +46,27 @@ def retry(p, fn, t=10):
             break
     return success
 
-def click_element(p, locator_fn, locator_arg, timeout=500):
-    try:
-        locator = locator_fn(locator_arg)
-        expect(locator).to_be_visible(timeout=timeout)
-        locator.click()
-        print(f"Clicked {locator_arg}!")
-        return True
-    except Exception:
-        print(f"Could not click {locator_arg}.")
-        return False
-
-def click_day(p, d):
-    return click_element(p, p.get_by_text, d)
-
-def click_register(p, s):
-    return click_element(p, lambda name: p.get_by_role("button", name=name), s)
-
 def sign_in(p, e, ph):
     try:
-        p.goto("https://mybirdies.ca")
-        p.get_by_role("link", name="Sign In").click()
-        p.get_by_placeholder("you@example.com").fill(e)
-        p.get_by_role("button", name="Continue").click()
+        p.goto("https://mybirdies.ca/login")
+        p.get_by_placeholder("name@example.com").fill(e)
+        click_button(p, "Continue with Email")
         p.get_by_placeholder("7781234567").fill(ph)
-        p.get_by_role("button", name="Sign In").click()
+        click_button(p, "Sign In")
+        return True
     except Exception:
-        print("Could not sign in.")
+        print(f"Could not sign in.")
+        return False
 
 def register(p, e, d):
-    for day in d:
-        try:
-            print(f"Registering {e} for {day}...")
-            if not retry(p, lambda: click_day(p, day)):
-                raise Exception()
-            if not click_register(p, "Register Now"):
-                raise Exception()
-            print(f"Registered {e} for {day}!")
-        except Exception:
-            print(f"Could not register {e} for {day}.")
-        finally:
-            p.get_by_text("Birdie Buddies").click()
-
-def add_guests(p, g, gd):
-    for guest in g:
-        for day in gd:
-            try:
-                print(f"Adding {guest} for {day}...")
-                expect(p.get_by_text(day)).to_be_visible()
-                p.get_by_text(day).click()
-                expect(p.get_by_placeholder("Guest name")).to_be_visible()
-                p.get_by_placeholder("Guest name").fill(g)
-                expect(p.get_by_role("button", name="Add")).to_be_visible()
-                p.get_by_role("button", name="Add").click()
-                print(f"Added {guest} for {day}!")
-            except Exception as err:
-                print(f"Could not add {guest} for {day}")
-                print(str(err))
-            finally:
-                p.get_by_text("Birdie Buddies").click()
+    try:
+        print(f"Registering {e} for {d}...")
+        if not retry(p, lambda: click_card(p, d)):
+            raise Exception()
+        if not click_button(p, "Register Now"):
+            raise Exception()
+        print(f"Registered {e} for {d}!")
+    except Exception:
+        print(f"Could not register {e} for {d}.")
+    finally:
+        p.goto("https://mybirdies.ca/sessions")

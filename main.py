@@ -6,10 +6,15 @@ from member import Member
 
 def run(m):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch()
         page = browser.new_page()
-        reserve.sign_in(page, m.email, m.phone_number)
-        reserve.register(page, m.email, util.days_to_list(m.days))
+        if not reserve.sign_in(page, m.email, m.phone_number):
+            return
+        if not reserve.is_balance_sufficient(page, m.email):
+            return
+        days = util.days_to_list(m.days)
+        for day in days:
+            reserve.register(page, m.email, day)
         if m.guests and m.guest_days:
             reserve.add_guests(page, util.guests_to_list(m.guests), util.days_to_list(m.guest_days))
         browser.close()        
