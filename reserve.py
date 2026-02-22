@@ -20,13 +20,15 @@ def click_button(p, s):
 def click_card(p, d):
     return click_element(p.get_by_text, d)
 
-def is_balance_sufficient(p, e):
+def is_balance_sufficient(p, e, n):
     try:
         title = "Available balance - Click to view wallet"
         expect(p.get_by_title(title)).to_have_text(re.compile(r"\$\d+\.\d{2}"))
         balance = p.get_by_title(title).text_content().strip()
         balance = Decimal(balance[1:])
-        if balance < 15.00:
+        cost = 15.00
+        balance_needed = cost * n
+        if balance < balance_needed:
             print(f"{e} has insufficient balance: ${balance:.2f}")
             return False
         return True

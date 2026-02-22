@@ -10,9 +10,10 @@ def run(m):
         page = browser.new_page()
         if not reserve.sign_in(page, m.email, m.phone_number):
             return
-        if not reserve.is_balance_sufficient(page, m.email):
-            return
         days = util.days_to_list(m.days)
+        num_days = len(days)
+        if not reserve.is_balance_sufficient(page, m.email, num_days):
+            return
         for day in days:
             reserve.register(page, m.email, day)
         if m.guests and m.guest_days:
