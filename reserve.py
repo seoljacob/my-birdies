@@ -35,7 +35,7 @@ def is_balance_sufficient(p, e, n):
     except Exception as err:
         print(f"Could not check balance for {e}: {err}")
     
-def retry(p, fn, t=30):
+def retry(p, fn, t=120):
     end_time = time.time() + t
     i = 1
     success = False
@@ -68,6 +68,7 @@ def register(p, e, d):
             raise Exception()
         if not click_button(p, "Register Now"):
             raise Exception()
+        p.wait_for_timeout(3000)
         print(f"Registered {e} for {d}!")
     except Exception:
         print(f"Could not register {e} for {d}.")
