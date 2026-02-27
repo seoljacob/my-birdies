@@ -68,7 +68,7 @@ def register(p, e, d):
             raise Exception()
         if not click_button(p, "Register Now"):
             raise Exception()
-        p.wait_for_timeout(3000)
+        p.wait_for_timeout(5000)
         print(f"Registered {e} for {d}!")
     except Exception:
         print(f"Could not register {e} for {d}.")
