@@ -66,7 +66,7 @@ def register(p, e, d):
         print(f"Registering {e} for {d}...")
         if not retry(p, lambda: click_card(p, d)):
             raise Exception()
-        if not click_button(p, "Register Now"):
+        if not retry(p, lambda: click_button(p, "Register Now")):
             raise Exception()
         p.wait_for_timeout(5000)
         print(f"Registered {e} for {d}!")
