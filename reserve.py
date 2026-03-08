@@ -73,4 +73,4 @@ def register(p, e, d):
     except Exception:
         print(f"Could not register {e} for {d}.")
     finally:
-        p.goto("https://mybirdies.ca/sessions")
+        p.goto("https://mybirdies.ca/sessions", wait_until="domcontentloaded")
